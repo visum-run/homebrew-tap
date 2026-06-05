@@ -1,81 +1,35 @@
 # ReverseContact CLI formula.
 #
-# The monorepo (visum-run/reversecontact) is private, so release assets are
-# fetched through the GitHub API with a token instead of the public download
-# URL. Set HOMEBREW_GITHUB_API_TOKEN to a token that can read the repo:
+# Binaries are distributed as public archives on ReverseContact's storage
+# bucket, so no token is needed:
 #
-#   export HOMEBREW_GITHUB_API_TOKEN="$(gh auth token)"
 #   brew install visum-run/tap/rc
 #
-# Once releases move to a public repo, drop the download strategy and the
-# `using:` arguments below.
-class GitHubPrivateReleaseDownloadStrategy < CurlDownloadStrategy
-  def initialize(url, name, version, **meta)
-    super
-    match = url.match(%r{https://github\.com/([^/]+)/([^/]+)/releases/download/(.+)/([^/]+)\z})
-    raise CurlDownloadStrategyError, "Invalid GitHub release URL: #{url}" unless match
-
-    @owner, @repo, @tag, @filename = match.captures
-  end
-
-  private
-
-  def github_token
-    token = ENV["HOMEBREW_GITHUB_API_TOKEN"].to_s
-    raise CurlDownloadStrategyError, "HOMEBREW_GITHUB_API_TOKEN is required for private releases" if token.empty?
-
-    token
-  end
-
-  def asset_id
-    @asset_id ||= begin
-      require "json"
-      release_url = "https://api.github.com/repos/#{@owner}/#{@repo}/releases/tags/#{@tag}"
-      output = Utils.popen_read("curl", "-sf", "-H", "Authorization: token #{github_token}", release_url)
-      release = JSON.parse(output)
-      asset = (release["assets"] || []).find { |a| a["name"] == @filename }
-      raise CurlDownloadStrategyError, "Asset #{@filename} not found in release #{@tag}" unless asset
-
-      asset["id"]
-    end
-  end
-
-  def _fetch(url:, resolved_url:, timeout:)
-    curl_download(
-      "https://api.github.com/repos/#{@owner}/#{@repo}/releases/assets/#{asset_id}",
-      "--header", "Authorization: token #{github_token}",
-      "--header", "Accept: application/octet-stream",
-      to: temporary_path, timeout: timeout
-    )
-  end
-end
-
+# Release procedure: tag cli/vX.Y.Z on visum-run/reversecontact (the release
+# workflow publishes the archives), then update `version`, the URLs, and the
+# sha256 values below from <bucket>/vX.Y.Z/SHA256SUMS.
 class Rc < Formula
   desc "ReverseContact CLI: enrich and search people and companies from your terminal"
   homepage "https://www.reversecontact.com"
-  version "0.1.0"
+  version "0.1.1"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/visum-run/reversecontact/releases/download/cli/v0.1.0/rc-darwin-arm64",
-          using: GitHubPrivateReleaseDownloadStrategy
-      sha256 "2236cbc19b9bd72f64891b49c1293105bebd710c30a87b97b1aeab1494d271cb"
+      url "https://ighnalfpeslhsseflvxa.supabase.co/storage/v1/object/public/cli/v0.1.1/rc-darwin-arm64.tar.gz"
+      sha256 "8da479033d59380649600f37e761285dd190efe0847a11902c24e7ce040c646c"
     else
-      url "https://github.com/visum-run/reversecontact/releases/download/cli/v0.1.0/rc-darwin-x64",
-          using: GitHubPrivateReleaseDownloadStrategy
-      sha256 "ed154d4540632bc5284d3a84b677b337e930437493871b8d1bc50a3c0d493fb2"
+      url "https://ighnalfpeslhsseflvxa.supabase.co/storage/v1/object/public/cli/v0.1.1/rc-darwin-x64.tar.gz"
+      sha256 "929cbc7fbda914c151d07402cf78c62eb52db49d3c7a7946a5c5c80990c507f9"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/visum-run/reversecontact/releases/download/cli/v0.1.0/rc-linux-arm64",
-          using: GitHubPrivateReleaseDownloadStrategy
-      sha256 "8996902dba18f9bb5de22e52d5c13e327e36d8befc62eb60861c52eb9af7eff1"
+      url "https://ighnalfpeslhsseflvxa.supabase.co/storage/v1/object/public/cli/v0.1.1/rc-linux-arm64.tar.gz"
+      sha256 "b7399729327d7d5a826428c471580ec942092f9858e77abfaa7f7bf4d8401535"
     else
-      url "https://github.com/visum-run/reversecontact/releases/download/cli/v0.1.0/rc-linux-x64",
-          using: GitHubPrivateReleaseDownloadStrategy
-      sha256 "12488d032d247eac75c4cd2d4d3f0611cf58fb930abfc88c977300fdeaf956d9"
+      url "https://ighnalfpeslhsseflvxa.supabase.co/storage/v1/object/public/cli/v0.1.1/rc-linux-x64.tar.gz"
+      sha256 "8993fddc790fd77ba88e8e5eec9342d3c85facef11822b66d6b061f07e1018f2"
     end
   end
 
