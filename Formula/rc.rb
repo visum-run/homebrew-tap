@@ -1,35 +1,35 @@
 # ReverseContact CLI formula.
 #
-# Binaries are distributed as public archives on ReverseContact's storage
-# bucket, so no token is needed:
+# Binaries are public archives served from app.reversecontact.com (backed by
+# ReverseContact's storage CDN), so no token is needed:
 #
 #   brew install visum-run/tap/rc
 #
 # Release procedure: tag cli/vX.Y.Z on visum-run/reversecontact (the release
 # workflow publishes the archives), then update `version`, the URLs, and the
-# sha256 values below from <bucket>/vX.Y.Z/SHA256SUMS.
+# sha256 values below from https://app.reversecontact.com/cli/vX.Y.Z/SHA256SUMS.
 class Rc < Formula
   desc "ReverseContact CLI: enrich and search people and companies from your terminal"
   homepage "https://www.reversecontact.com"
-  version "0.1.1"
+  version "0.1.2"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://ighnalfpeslhsseflvxa.supabase.co/storage/v1/object/public/cli/v0.1.1/rc-darwin-arm64.tar.gz"
-      sha256 "8da479033d59380649600f37e761285dd190efe0847a11902c24e7ce040c646c"
+      url "https://app.reversecontact.com/cli/v0.1.2/rc-darwin-arm64.tar.gz"
+      sha256 "26b8391c12c0ab8f7d383c27868f868fff21ea44329d9536dd776a072986c201"
     else
-      url "https://ighnalfpeslhsseflvxa.supabase.co/storage/v1/object/public/cli/v0.1.1/rc-darwin-x64.tar.gz"
-      sha256 "929cbc7fbda914c151d07402cf78c62eb52db49d3c7a7946a5c5c80990c507f9"
+      url "https://app.reversecontact.com/cli/v0.1.2/rc-darwin-x64.tar.gz"
+      sha256 "3756d9b1351afae317f02b8d0e8d0bee993dc6045063ac2d8bc10e5e6d224ceb"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://ighnalfpeslhsseflvxa.supabase.co/storage/v1/object/public/cli/v0.1.1/rc-linux-arm64.tar.gz"
-      sha256 "b7399729327d7d5a826428c471580ec942092f9858e77abfaa7f7bf4d8401535"
+      url "https://app.reversecontact.com/cli/v0.1.2/rc-linux-arm64.tar.gz"
+      sha256 "a4286d7f788ace6b3e30c4c8f61be6d54f0cf180cfbbb79d2cc095bf6aadfd48"
     else
-      url "https://ighnalfpeslhsseflvxa.supabase.co/storage/v1/object/public/cli/v0.1.1/rc-linux-x64.tar.gz"
-      sha256 "8993fddc790fd77ba88e8e5eec9342d3c85facef11822b66d6b061f07e1018f2"
+      url "https://app.reversecontact.com/cli/v0.1.2/rc-linux-x64.tar.gz"
+      sha256 "689881d5091989b783da80b8f58293e49c46160849b0cccac3d6b0a0dcecfe7a"
     end
   end
 
