@@ -11,25 +11,25 @@
 class Rc < Formula
   desc "ReverseContact CLI: enrich and search people and companies from your terminal"
   homepage "https://www.reversecontact.com"
-  version "0.3.0"
+  version "0.4.0"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://app.reversecontact.com/cli/v0.3.0/rc-darwin-arm64.tar.gz"
-      sha256 "bcbe38c2938a164d6bee3937cf34c11ae78012eda6d8b38425c3c6ac05964d49"
+      url "https://app.reversecontact.com/cli/v0.4.0/rc-darwin-arm64.tar.gz"
+      sha256 "1be96536dc2fdc8cbe1ccd37c4a28792cb480a813073fe28aecec3a35b4ad270"
     else
-      url "https://app.reversecontact.com/cli/v0.3.0/rc-darwin-x64.tar.gz"
-      sha256 "db7c6abcff82dd8cea732c1d3aa5d659da0bec00af11b8146b6fc6ecc302ca30"
+      url "https://app.reversecontact.com/cli/v0.4.0/rc-darwin-x64.tar.gz"
+      sha256 "c594275743b3efa1909e1d41650758c825de1d32fb64a059fd770feba7dd0d5b"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://app.reversecontact.com/cli/v0.3.0/rc-linux-arm64.tar.gz"
-      sha256 "e84a75339f6eb38f611689fc1d8d185b3ccbf22bb7465d330dfac3dc9cc34c06"
+      url "https://app.reversecontact.com/cli/v0.4.0/rc-linux-arm64.tar.gz"
+      sha256 "15588a4efb32b9358a3ae318dd47068d5f54446c3745634a0bdb4e9adc7c9b34"
     else
-      url "https://app.reversecontact.com/cli/v0.3.0/rc-linux-x64.tar.gz"
-      sha256 "7d85b804b7485aa8b2da1ed318228e4af5db17cf06f0ea1deb6a099608485e14"
+      url "https://app.reversecontact.com/cli/v0.4.0/rc-linux-x64.tar.gz"
+      sha256 "babbc9235becb1c98d124fefa7a13975d8147b14a7ab68f416d58e22b72e5e56"
     end
   end
 
